@@ -19,14 +19,11 @@ type cases = [
 type error = MyAwaited<number>;
 
 // ============= Your Code Here =============
-type MyAwaited<T> = T extends Promise<infer U>
-  ? U extends Promise<any>
+type MyAwaited<T extends PromiseLike<any>> = T extends PromiseLike<infer U>
+  ? U extends PromiseLike<any>
     ? MyAwaited<U>
     : U
-  : T extends { then: (onfulfilled: (arg: infer V) => any) => any }
-  ? V
   : never;
-
 // ============= Description =============
 async function fetchUserData() {
   // Returns a Promise<User>
